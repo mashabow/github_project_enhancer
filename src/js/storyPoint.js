@@ -31,6 +31,7 @@ const findOrCreateStoryPointConter = (column) => {
 }
 
 const setStoryPoint = (column, points) => {
+  console.log(column, points);
   const storyPointConter = findOrCreateStoryPointConter(column);
   const suffix = points === 1 ? 'pt' : 'pts';
   storyPointConter.textContent = points + suffix;
@@ -87,12 +88,7 @@ const initialize = (pattern) => {
 
 const getLabelPattern = async () => {
   const defaultPattern = '(\\d+)pts?';
-  return new Promise((resolve) => {
-    chrome.storage.sync.get(
-      { labelPattern: defaultPattern },
-      (items) => { resolve(new RegExp(items.labelPattern)) }
-    )
-  });
+  return new RegExp(defaultPattern);
 }
 
 (async () => {

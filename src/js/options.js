@@ -7,7 +7,7 @@ const save_options = () => {
     return;
   }
 
-  chrome.storage.sync.set(
+  browser.storage.sync.set(
     { labelPattern },
     () => {
       // Update status to let user know options were saved.
@@ -20,7 +20,7 @@ const save_options = () => {
 
 const restore_options = () => {
   const defaultPattern = '(\\d+)pts?';
-  chrome.storage.sync.get(
+  browser.storage.sync.get(
     { labelPattern: defaultPattern },
     (items) => {
       document.getElementById('labelPattern').value = items.labelPattern;
