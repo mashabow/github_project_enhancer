@@ -7,8 +7,11 @@ const getProjectColumns = () => {
 }
 
 const getStoryPointLabels = (column, pattern) => {
-  const labels = toArray(column.querySelectorAll('.issue-card-label'));
-  return labels.filter(label => pattern.test(label.innerText));
+  const cards = toArray(column.querySelectorAll('.issue-card'));
+  return cards
+    .map(card => JSON.parse(card.getAttribute('data-card-label')) || [])
+    .flat()
+    .filter(label => pattern.test(label));
 }
 
 const findOrCreateStoryPointConter = (column) => {
@@ -36,7 +39,7 @@ const setStoryPoint = (column, points) => {
 const calculateStoryPoints = (column, pattern) => {
   const storyPointLabels = getStoryPointLabels(column, pattern);
   const storyPoints = storyPointLabels.reduce((total, storyPointLabel) => {
-    return total + parseInt(pattern.exec(storyPointLabel.innerText)[1]);
+    return total + parseInt(pattern.exec(storyPointLabel)[1]);
   }, 0)
   setStoryPoint(column, storyPoints);
 }
