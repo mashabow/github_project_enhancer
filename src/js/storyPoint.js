@@ -8,10 +8,10 @@ const getProjectColumns = () => {
 
 const getStoryPointLabels = (column, pattern) => {
   const cards = toArray(column.querySelectorAll('.issue-card'));
-  const labels = cards.map(card =>
-    JSON.parse(card.getAttribute('data-card-label')) || [],
-  ).flat();
-  return labels.filter(label => pattern.test(label));
+  return cards
+    .map(card => JSON.parse(card.getAttribute('data-card-label')) || [])
+    .flat()
+    .filter(label => pattern.test(label));
 }
 
 const findOrCreateStoryPointConter = (column) => {
